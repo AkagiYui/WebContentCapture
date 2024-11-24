@@ -3,4 +3,4 @@ node_modules/
 extracted/
 uploads/
 
-screenshot.png
+*.png
