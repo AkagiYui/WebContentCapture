@@ -90,27 +90,24 @@ export const capture = async (options) => {
     await page.goto(options.url)
 
     // 滚动到底部
-    const autoScroll = async (page) => {
-      await page.evaluate(async () => {
-        await new Promise((resolve) => {
-          let totalHeight = 0
-          const distance = 100
-          const maxScrollHeight = 100000 // 最大滚动高度
+    await page.evaluate(async () => {
+      await new Promise((resolve) => {
+        let totalHeight = 0
+        const distance = 100
+        const maxScrollHeight = 100000 // 最大滚动高度
 
-          const timer = setInterval(() => {
-            const scrollHeight = document.body.scrollHeight
-            window.scrollBy(0, distance)
-            totalHeight += distance
+        const timer = setInterval(() => {
+          const scrollHeight = document.body.scrollHeight
+          window.scrollBy(0, distance)
+          totalHeight += distance
 
-            if (totalHeight >= scrollHeight || totalHeight >= maxScrollHeight) {
-              clearInterval(timer)
-              resolve()
-            }
-          }, 100)
-        })
+          if (totalHeight >= scrollHeight || totalHeight >= maxScrollHeight) {
+            clearInterval(timer)
+            resolve()
+          }
+        }, 100)
       })
-    }
-    await autoScroll(page)
+    })
     // console.log("滚动完成")
 
     const element = await page.$(options.selector || "body")
